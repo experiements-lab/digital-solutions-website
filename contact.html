@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Digital Solutions Consulting - Get in touch for IT consulting, data analytics, web development, and automation services.">
+    <title>Contact Us - Digital Solutions Consulting</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="index.html" class="logo">
+                    <img src="assets/images/Logo.png" alt="Digital Solutions Consulting Logo">
+                </a>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="services.html" class="nav-link">Services</a></li>
+                    <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+                    <li><a href="contact.html" class="nav-link active btn-primary">Get Started</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Get in Touch</h1>
+            <p>Let's discuss how we can help transform your business</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Contact Form -->
+                <div class="contact-form-wrapper">
+                    <h2>Send Us a Message</h2>
+                    <p class="form-description">
+                        Fill out the form below and we'll get back to you within 24 hours to discuss
+                        your project requirements and how we can help.
+                    </p>
+                    <form class="contact-form" id="contactForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+                        <!-- Hidden fields for Netlify Forms -->
+                        <input type="hidden" name="form-name" value="contact">
+                        <p class="hidden">
+                            <label>Don't fill this out if you're human: <input name="bot-field"></label>
+                        </p>
+
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" required placeholder="John Doe">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required placeholder="john@company.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="company">Company Name</label>
+                            <input type="text" id="company" name="company" placeholder="Your Company">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+27 XX XXX XXXX">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="service">Service Interested In *</label>
+                            <select id="service" name="service" required>
+                                <option value="">Select a service</option>
+                                <option value="data-analytics">Data & Analytics Solutions</option>
+                                <option value="web-development">Web Application Development</option>
+                                <option value="mobile-development">Mobile Application Development</option>
+                                <option value="automation">Automation & Integration</option>
+                                <option value="uiux-design">UI/UX Design</option>
+                                <option value="ai-solutions">AI Solutions</option>
+                                <option value="consulting">General Consulting</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="budget">Project Budget Range</label>
+                            <select id="budget" name="budget">
+                                <option value="">Select budget range</option>
+                                <option value="under-50k">Under R50,000</option>
+                                <option value="50k-100k">R50,000 - R100,000</option>
+                                <option value="100k-250k">R100,000 - R250,000</option>
+                                <option value="over-250k">Over R250,000</option>
+                                <option value="hourly">Hourly Rate</option>
+                                <option value="retainer">Monthly Retainer</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="timeline">Project Timeline</label>
+                            <select id="timeline" name="timeline">
+                                <option value="">Select timeline</option>
+                                <option value="urgent">Urgent (1-2 weeks)</option>
+                                <option value="short">Short-term (1-3 months)</option>
+                                <option value="medium">Medium-term (3-6 months)</option>
+                                <option value="long">Long-term (6+ months)</option>
+                                <option value="flexible">Flexible</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="message">Project Details *</label>
+                            <textarea id="message" name="message" rows="6" required placeholder="Tell us about your project, goals, and any specific requirements..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-large">Send Message</button>
+                    </form>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="contact-info-wrapper">
+                    <h2>Contact Information</h2>
+                    <div class="contact-info">
+                        <div class="info-card">
+                            <div class="info-icon">📍</div>
+                            <h3>Location</h3>
+                            <p>South Africa</p>
+                            <p class="info-detail">Serving businesses nationwide</p>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-icon">⏰</div>
+                            <h3>Business Hours</h3>
+                            <p>Monday - Friday</p>
+                            <p class="info-detail">8:00 AM - 5:00 PM SAST</p>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-icon">💬</div>
+                            <h3>Response Time</h3>
+                            <p>Within 24 hours</p>
+                            <p class="info-detail">We aim to respond to all inquiries within one business day</p>
+                        </div>
+                    </div>
+
+                    <div class="consultation-cta">
+                        <h3>Free Consultation</h3>
+                        <p>
+                            We offer a complimentary initial consultation to discuss your project needs
+                            and how our services can help you achieve your goals.
+                        </p>
+                        <ul class="consultation-benefits">
+                            <li>No obligation discussion</li>
+                            <li>Expert advice and recommendations</li>
+                            <li>Transparent pricing estimates</li>
+                            <li>Clear project roadmap</li>
+                        </ul>
+                    </div>
+
+                    <div class="engagement-options">
+                        <h3>Engagement Models</h3>
+                        <div class="engagement-list">
+                            <div class="engagement-item">
+                                <strong>Hourly Consulting</strong>
+                                <p>R1,100 - R1,800/hr</p>
+                            </div>
+                            <div class="engagement-item">
+                                <strong>Project-Based</strong>
+                                <p>R80,000 - R250,000</p>
+                            </div>
+                            <div class="engagement-item">
+                                <strong>Monthly Retainers</strong>
+                                <p>Custom pricing</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Contact Us -->
+    <section class="why-contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Work With Us?</h2>
+            </div>
+            <div class="why-contact-grid">
+                <div class="why-card">
+                    <h3>Expert Guidance</h3>
+                    <p>Direct access to seasoned professionals with multi-industry expertise</p>
+                </div>
+                <div class="why-card">
+                    <h3>Tailored Solutions</h3>
+                    <p>Custom-built solutions that align with your specific business needs</p>
+                </div>
+                <div class="why-card">
+                    <h3>Transparent Process</h3>
+                    <p>Clear communication, honest timelines, and upfront pricing</p>
+                </div>
+                <div class="why-card">
+                    <h3>Proven Track Record</h3>
+                    <p>Successful projects across banking, research, and education sectors</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>What is your typical project timeline?</h3>
+                    <p>
+                        Project timelines vary based on scope and complexity. Small projects may take 2-4 weeks,
+                        while larger implementations can span 3-6 months. We provide detailed timelines during
+                        our initial consultation.
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <h3>Do you work with startups or only established businesses?</h3>
+                    <p>
+                        We work with businesses of all sizes, from startups to established enterprises. Our
+                        flexible engagement models allow us to support organizations at different stages of growth.
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <h3>Can you work with our existing development team?</h3>
+                    <p>
+                        Absolutely! We often collaborate with internal teams, providing specialized expertise,
+                        guidance, or additional development capacity as needed.
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <h3>What happens after project completion?</h3>
+                    <p>
+                        We offer ongoing support and maintenance options, including monthly retainers for
+                        continuous optimization, updates, and technical assistance.
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <h3>Do you provide training for our team?</h3>
+                    <p>
+                        Yes, comprehensive training and documentation are included with all projects to ensure
+                        smooth user adoption and knowledge transfer.
+                    </p>
+                </div>
+                <div class="faq-item">
+                    <h3>What industries do you specialize in?</h3>
+                    <p>
+                        We have proven expertise in banking, healthcare, retail, education, manufacturing, and
+                        environmental research, with solutions adaptable to various sectors.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <img src="assets/images/Logo.png" alt="Digital Solutions Consulting" class="footer-logo">
+                    <p>Agile. Simple. Adaptable.</p>
+                    <p class="footer-description">
+                        Engineering clarity from complexity with premium IT consulting services.
+                    </p>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="services.html#data-analytics">Data & Analytics</a></li>
+                        <li><a href="services.html#development">Web & Mobile Development</a></li>
+                        <li><a href="services.html#automation">Automation</a></li>
+                        <li><a href="services.html#design">UI/UX Design</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Location</h4>
+                    <p>South Africa</p>
+                    <p class="footer-contact">Expert IT consulting services for businesses nationwide</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Digital Solutions Consulting. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
