@@ -310,9 +310,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     })();
 
-    // === STAT COUNTERS ===
+    // === STAT COUNTERS (also animates .result-metric on portfolio page) ===
     (function initCounters() {
-        const els = document.querySelectorAll('.stat-number');
+        const els = document.querySelectorAll('.stat-number, .result-metric');
         if (!els.length) return;
         const io = new IntersectionObserver(entries => {
             entries.forEach(entry => {
@@ -323,16 +323,70 @@ document.addEventListener('DOMContentLoaded', function() {
                 const num = parseInt(raw.replace(/\D/g, ''), 10);
                 const sfx = raw.replace(/\d/g, '');
                 if (isNaN(num)) return;
+                el.classList.add('counting');
                 const dur = 1500;
                 const t0  = performance.now();
                 (function tick(now) {
                     const p = Math.min((now - t0) / dur, 1);
                     el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * num) + sfx;
                     if (p < 1) requestAnimationFrame(tick);
+                    else el.classList.remove('counting');
                 })(t0);
             });
         }, { threshold: 0.6 });
         els.forEach(el => io.observe(el));
+    })();
+
+    // === SERVICES TABS ===
+    (function initServiceTabs() {
+        const tabNav = document.querySelector('.services-tab-nav');
+        if (!tabNav) return;
+        const btns = tabNav.querySelectorAll('.tab-btn');
+        const panels = document.querySelectorAll('.tab-panel');
+
+        function activateTab(id) {
+            btns.forEach(b => {
+                const active = b.dataset.tab === id;
+                b.classList.toggle('active', active);
+                b.setAttribute('aria-selected', active);
+            });
+            panels.forEach(p => {
+                const active = p.id === 'tab-' + id;
+                p.classList.toggle('active', active);
+            });
+        }
+
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => activateTab(btn.dataset.tab));
+        });
+
+        // Support deep-link via URL hash (e.g. services.html#automation)
+        const hash = window.location.hash.replace('#', '');
+        if (hash && document.getElementById('tab-' + hash)) activateTab(hash);
+    })();
+
+    // === FAQ ACCORDION ===
+    (function initAccordion() {
+        const items = document.querySelectorAll('.accordion-item');
+        if (!items.length) return;
+        items.forEach(item => {
+            const trigger = item.querySelector('.accordion-trigger');
+            const body    = item.querySelector('.accordion-body');
+            trigger.addEventListener('click', () => {
+                const open = trigger.getAttribute('aria-expanded') === 'true';
+                // close all
+                items.forEach(i => {
+                    i.querySelector('.accordion-trigger').setAttribute('aria-expanded', 'false');
+                    i.querySelector('.accordion-body').style.maxHeight = null;
+                    i.classList.remove('open');
+                });
+                if (!open) {
+                    trigger.setAttribute('aria-expanded', 'true');
+                    body.style.maxHeight = body.scrollHeight + 'px';
+                    item.classList.add('open');
+                }
+            });
+        });
     })();
 
     // === SCROLL TO TOP BUTTON ===
