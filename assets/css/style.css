@@ -605,6 +605,40 @@ section {
     justify-content: center;
 }
 
+/* Photo version of service-icon on home cards */
+.service-photo-card {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.service-photo-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.service-card:hover .service-photo-card img {
+    transform: scale(1.04);
+}
+
+.service-photo-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(8, 8, 8, 0.0) 40%,
+        rgba(8, 8, 8, 0.55) 100%
+    );
+    pointer-events: none;
+}
+
 .service-icon img {
     width: 100%;
     height: 100%;
@@ -795,10 +829,22 @@ section {
 }
 
 .bento-icon {
-    font-size: 1.875rem;
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(251, 57, 66, 0.14), rgba(224, 150, 37, 0.08));
+    border: 1px solid rgba(251, 57, 66, 0.22);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-bottom: 1rem;
-    display: block;
-    line-height: 1;
+}
+
+.bento-icon svg {
+    width: 22px;
+    height: 22px;
+    stroke: var(--primary-red);
+    flex-shrink: 0;
 }
 
 .bento-card h3 {
@@ -990,7 +1036,23 @@ section {
     border: 1px solid var(--border-subtle);
 }
 
-.vm-icon { font-size: 3.25rem; margin-bottom: 1.5rem; }
+.vm-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(251, 57, 66, 0.14), rgba(224, 150, 37, 0.08));
+    border: 1px solid rgba(251, 57, 66, 0.22);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.vm-icon svg {
+    width: 26px;
+    height: 26px;
+    stroke: var(--primary-red);
+}
 
 .values { background: var(--dark-bg); }
 
@@ -1137,7 +1199,35 @@ section {
     font-size: 0.925rem;
 }
 
+.service-visual {
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+}
+
 .service-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    min-height: 280px;
+    transition: transform 0.6s ease;
+}
+
+.service-visual:hover img {
+    transform: scale(1.03);
+}
+
+.service-visual::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(251,57,66,0.08) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+/* Legacy fallback (unused) */
+.service-visual-legacy img {
     width: 100%;
     max-width: 300px;
     margin: 0 auto;
@@ -1399,7 +1489,23 @@ section {
     border: 1px solid var(--border-subtle);
 }
 
-.info-icon { font-size: 1.625rem; margin-bottom: 0.75rem; }
+.info-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 11px;
+    background: linear-gradient(135deg, rgba(251, 57, 66, 0.14), rgba(224, 150, 37, 0.08));
+    border: 1px solid rgba(251, 57, 66, 0.22);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+}
+
+.info-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--primary-red);
+}
 .info-card h3 { margin-bottom: 0.5rem; font-size: 1rem; }
 .info-card p { margin-bottom: 0.25rem; font-size: 0.875rem; }
 .info-detail { font-size: 0.78rem; color: var(--text-tertiary); }
@@ -2179,4 +2285,34 @@ section {
         flex-direction: row;
         width: auto;
     }
+}
+
+/* ===================================
+   MARQUEE ICON STYLES
+   =================================== */
+.marquee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Simple Icons (tech brand SVG images) */
+.si-icon {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    flex-shrink: 0;
+    filter: brightness(0) invert(0.65);
+}
+
+/* Lucide icons in marquee */
+.marquee-item svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    stroke: var(--text-secondary);
+}
+
+.marquee-item-alt svg {
+    stroke: rgba(252, 213, 120, 0.6);
 }
