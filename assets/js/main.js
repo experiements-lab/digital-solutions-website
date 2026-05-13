@@ -167,7 +167,10 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             input.addEventListener('blur', function() {
-                this.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                const hasError = this.parentElement.querySelector('.error-message');
+                if (!hasError) {
+                    this.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                }
             });
         });
     }
@@ -224,38 +227,19 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(element);
     });
 
-    // === SCROLL TO TOP BUTTON (Optional Enhancement) ===
+    // === SCROLL TO TOP BUTTON ===
     const scrollToTopBtn = document.createElement('button');
     scrollToTopBtn.innerHTML = '↑';
     scrollToTopBtn.className = 'scroll-to-top';
-    scrollToTopBtn.style.cssText = `
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        width: 50px;
-        height: 50px;
-        background: var(--gradient);
-        color: white;
-        border: none;
-        border-radius: 50%;
-        font-size: 24px;
-        cursor: pointer;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-        z-index: 999;
-        box-shadow: 0 4px 16px rgba(251, 57, 66, 0.3);
-    `;
+    scrollToTopBtn.setAttribute('aria-label', 'Scroll to top');
 
     document.body.appendChild(scrollToTopBtn);
 
     window.addEventListener('scroll', function() {
         if (window.pageYOffset > 500) {
-            scrollToTopBtn.style.opacity = '1';
-            scrollToTopBtn.style.visibility = 'visible';
+            scrollToTopBtn.classList.add('visible');
         } else {
-            scrollToTopBtn.style.opacity = '0';
-            scrollToTopBtn.style.visibility = 'hidden';
+            scrollToTopBtn.classList.remove('visible');
         }
     });
 
@@ -266,23 +250,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    scrollToTopBtn.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-5px)';
-        this.style.boxShadow = '0 6px 24px rgba(251, 57, 66, 0.4)';
-    });
-
-    scrollToTopBtn.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0)';
-        this.style.boxShadow = '0 4px 16px rgba(251, 57, 66, 0.3)';
-    });
-
-    // === PAGE LOAD ANIMATION ===
-    document.body.style.opacity = '0';
-    document.body.style.transition = 'opacity 0.5s ease';
-
-    setTimeout(function() {
-        document.body.style.opacity = '1';
-    }, 100);
 
     // === CONSOLE MESSAGE ===
     console.log('%c Digital Solutions Consulting ', 'background: linear-gradient(135deg, rgb(251, 57, 66), rgb(224, 150, 37)); color: white; font-size: 20px; padding: 10px; border-radius: 5px;');
