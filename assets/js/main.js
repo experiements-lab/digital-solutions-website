@@ -227,6 +227,114 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(element);
     });
 
+    // === WORD FADE + TYPEWRITER (Hero) ===
+    (function initHeroAnimations() {
+        const heroTitle    = document.querySelector('.hero-title');
+        const heroSubtitle = document.querySelector('.hero-subtitle');
+        if (!heroTitle) return;
+
+        heroTitle.classList.add('words-ready');
+        let wordCount = 0;
+
+        function wrapWords(container, isSpan) {
+            const words = container.textContent.trim().split(/\s+/).filter(Boolean);
+            if (!isSpan) {
+                // Replace text node
+                const frag = document.createDocumentFragment();
+                words.forEach((word, i) => {
+                    if (i > 0) frag.appendChild(document.createTextNode(' '));
+                    const s = document.createElement('span');
+                    s.className = 'word';
+                    s.style.setProperty('--i', wordCount++);
+                    s.textContent = word;
+                    frag.appendChild(s);
+                });
+                frag.appendChild(document.createTextNode(' '));
+                container.replaceWith(frag);
+            } else {
+                container.innerHTML = '';
+                words.forEach((word, i) => {
+                    if (i > 0) container.appendChild(document.createTextNode(' '));
+                    const s = document.createElement('span');
+                    s.className = 'word';
+                    s.style.setProperty('--i', wordCount++);
+                    s.textContent = word;
+                    container.appendChild(s);
+                });
+            }
+        }
+
+        Array.from(heroTitle.childNodes).forEach(node => {
+            if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+                wrapWords(node, false);
+            } else if (node.nodeName === 'SPAN' && node.classList.contains('gradient-text')) {
+                wrapWords(node, true);
+            }
+        });
+
+        // Typewriter on subtitle
+        if (heroSubtitle) {
+            const text = heroSubtitle.textContent.trim();
+            heroSubtitle.style.animation = 'none';
+            heroSubtitle.style.opacity   = '1';
+            heroSubtitle.innerHTML = '<span class="tw-cursor"></span>';
+            const cursor    = heroSubtitle.querySelector('.tw-cursor');
+            const startAt   = (wordCount - 1) * 110 + 80 + 700;
+            let charI = 0;
+            setTimeout(() => {
+                const id = setInterval(() => {
+                    if (charI < text.length) {
+                        heroSubtitle.insertBefore(document.createTextNode(text[charI++]), cursor);
+                    } else {
+                        clearInterval(id);
+                        setTimeout(() => cursor.remove(), 2800);
+                    }
+                }, 55);
+            }, startAt);
+        }
+    })();
+
+    // === HERO CURSOR SPOTLIGHT ===
+    (function initSpotlight() {
+        const hero = document.querySelector('.hero');
+        if (!hero) return;
+        const spot = document.createElement('div');
+        spot.className = 'hero-spotlight';
+        hero.appendChild(spot);
+        hero.addEventListener('mouseenter', () => { spot.style.opacity = '1'; });
+        hero.addEventListener('mouseleave', () => { spot.style.opacity = '0'; });
+        hero.addEventListener('mousemove', e => {
+            const r = hero.getBoundingClientRect();
+            spot.style.left = (e.clientX - r.left) + 'px';
+            spot.style.top  = (e.clientY - r.top)  + 'px';
+        });
+    })();
+
+    // === STAT COUNTERS ===
+    (function initCounters() {
+        const els = document.querySelectorAll('.stat-number');
+        if (!els.length) return;
+        const io = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                io.unobserve(entry.target);
+                const el  = entry.target;
+                const raw = el.textContent.trim();
+                const num = parseInt(raw.replace(/\D/g, ''), 10);
+                const sfx = raw.replace(/\d/g, '');
+                if (isNaN(num)) return;
+                const dur = 1500;
+                const t0  = performance.now();
+                (function tick(now) {
+                    const p = Math.min((now - t0) / dur, 1);
+                    el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * num) + sfx;
+                    if (p < 1) requestAnimationFrame(tick);
+                })(t0);
+            });
+        }, { threshold: 0.6 });
+        els.forEach(el => io.observe(el));
+    })();
+
     // === SCROLL TO TOP BUTTON ===
     const scrollToTopBtn = document.createElement('button');
     scrollToTopBtn.innerHTML = '↑';

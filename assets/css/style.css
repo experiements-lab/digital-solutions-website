@@ -226,6 +226,8 @@ p {
     background: var(--gradient);
     color: #fff;
     box-shadow: 0 4px 20px rgba(251, 57, 66, 0.35);
+    position: relative;
+    overflow: hidden;
 }
 
 .btn-primary:hover {
@@ -367,7 +369,23 @@ p {
 
 .hero-title {
     margin-bottom: 1rem;
+    /* animation handled by JS word-fade; CSS fallback for no-JS */
     animation: fadeInUp 0.7s ease 0.1s both;
+}
+
+.hero-title.words-ready {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+.hero-title .word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(5px);
+    animation: wordFadeIn 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: calc(var(--i, 0) * 110ms + 80ms);
 }
 
 .hero-subtitle {
@@ -376,7 +394,7 @@ p {
     font-weight: 600;
     margin-bottom: 1.5rem;
     letter-spacing: 0.06em;
-    animation: fadeInUp 0.7s ease 0.2s both;
+    min-height: 2rem;
 }
 
 .hero-description {
@@ -1632,4 +1650,201 @@ section {
     html {
         scroll-behavior: auto;
     }
+}
+
+/* ============================================
+   21ST.DEV INSPIRED ENHANCEMENTS — HOME PAGE
+   ============================================ */
+
+/* === WORD FADE ANIMATION === */
+@keyframes wordFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0px);
+    }
+}
+
+/* === TYPEWRITER CURSOR === */
+.tw-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 0.85em;
+    background: var(--secondary-gold);
+    margin-left: 2px;
+    vertical-align: middle;
+    border-radius: 1px;
+    animation: cursorBlink 0.75s step-end infinite;
+}
+
+@keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+}
+
+/* === HERO CURSOR SPOTLIGHT === */
+.hero-spotlight {
+    position: absolute;
+    width: 520px;
+    height: 520px;
+    background: radial-gradient(
+        circle at center,
+        rgba(251, 57, 66, 0.07) 0%,
+        rgba(224, 150, 37, 0.04) 40%,
+        transparent 65%
+    );
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    z-index: 0;
+}
+
+/* === MARQUEE === */
+.marquee-section {
+    overflow: hidden;
+    background: var(--dark-bg);
+    padding: 1.625rem 0;
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+    -webkit-mask-image: linear-gradient(
+        90deg, transparent 0%, black 7%, black 93%, transparent 100%
+    );
+    mask-image: linear-gradient(
+        90deg, transparent 0%, black 7%, black 93%, transparent 100%
+    );
+}
+
+.marquee-row {
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+.marquee-row:last-child { margin-bottom: 0; }
+
+.marquee-track {
+    display: flex;
+    gap: 0.5rem;
+    width: max-content;
+    animation: marqueeLeft 30s linear infinite;
+    will-change: transform;
+}
+
+.marquee-track.marquee-reverse {
+    animation-direction: reverse;
+    animation-duration: 38s;
+}
+
+.marquee-track:hover { animation-play-state: paused; }
+
+@keyframes marqueeLeft {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+.marquee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.875rem;
+    background: var(--dark-bg-tertiary);
+    border: 1px solid var(--border-subtle);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    transition: border-color 0.3s ease, color 0.3s ease;
+    cursor: default;
+    user-select: none;
+}
+
+.marquee-item:hover {
+    border-color: rgba(255, 255, 255, 0.14);
+    color: var(--text-primary);
+}
+
+.marquee-item-alt {
+    background: rgba(251, 57, 66, 0.04);
+    border-color: rgba(251, 57, 66, 0.1);
+    color: var(--secondary-gold);
+}
+
+.marquee-item-alt:hover {
+    border-color: rgba(251, 57, 66, 0.32);
+    color: var(--secondary-gold);
+}
+
+/* === BORDER BEAM (Service Cards) === */
+@property --border-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+}
+
+.service-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    padding: 1px;
+    background: conic-gradient(
+        from var(--border-angle),
+        transparent 70%,
+        var(--primary-red) 82%,
+        var(--secondary-gold) 91%,
+        transparent 100%
+    );
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    animation: borderBeam 3s linear infinite;
+    animation-play-state: paused;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.service-card:hover::after {
+    opacity: 1;
+    animation-play-state: running;
+}
+
+@keyframes borderBeam {
+    to { --border-angle: 360deg; }
+}
+
+/* === SHIMMER BUTTON === */
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -110%;
+    width: 55%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transform: skewX(-20deg);
+    animation: shimmerBtn 5s ease-in-out infinite;
+    animation-delay: 2.5s;
+    pointer-events: none;
+}
+
+/* Don't double-shimmer the nav pill button */
+.nav-link.btn-primary::after { display: none; }
+
+@keyframes shimmerBtn {
+    0%   { left: -110%; opacity: 1; }
+    45%  { left: 160%;  opacity: 1; }
+    46%  { opacity: 0; }
+    100% { left: 160%;  opacity: 0; }
 }
