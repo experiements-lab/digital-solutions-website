@@ -413,6 +413,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 
+    // === LUCIDE ICONS ===
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+
     // === CONSOLE MESSAGE ===
     console.log('%c Digital Solutions Consulting ', 'background: linear-gradient(135deg, rgb(251, 57, 66), rgb(224, 150, 37)); color: white; font-size: 20px; padding: 10px; border-radius: 5px;');
     console.log('%c Agile. Simple. Adaptable. ', 'color: rgb(252, 213, 120); font-size: 14px;');
