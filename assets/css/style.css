@@ -1,6 +1,6 @@
 /* ===================================
    Digital Solutions Consulting
-   Main Stylesheet — 21st.dev inspired
+   Main Stylesheet - 21st.dev inspired
    Brand Colors:
    - Primary Red: rgb(251, 57, 66)
    - Secondary Gold: rgb(252, 213, 120)
@@ -765,7 +765,7 @@ section {
     line-height: 1.75;
 }
 
-/* === WHY CHOOSE — BENTO GRID === */
+/* === WHY CHOOSE - BENTO GRID === */
 .why-choose {
     background: var(--dark-bg-secondary);
 }
@@ -1014,7 +1014,7 @@ section {
     align-items: center;
 }
 
-/* Brand composition card — replaces static image */
+/* Brand composition card - replaces static image */
 .brand-composition {
     position: relative;
     background: var(--dark-bg-tertiary);
@@ -1927,7 +1927,7 @@ section {
 }
 
 /* ============================================
-   21ST.DEV INSPIRED ENHANCEMENTS — HOME PAGE
+   21ST.DEV INSPIRED ENHANCEMENTS - HOME PAGE
    ============================================ */
 
 /* === WORD FADE ANIMATION === */
@@ -2273,7 +2273,7 @@ section {
 }
 
 /* ===================================
-   FOUNDER CARD — ENHANCED
+   FOUNDER CARD - ENHANCED
    =================================== */
 .founder-card {
     display: grid;
