@@ -996,6 +996,34 @@ section {
     color: var(--text-tertiary);
 }
 
+.footer-email,
+.footer-domain {
+    display: block;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+    margin-top: 0.3rem;
+}
+
+.footer-email:hover {
+    color: var(--primary-red);
+}
+
+.footer-domain:hover {
+    color: var(--dark-gold);
+}
+
+.info-email-link {
+    color: var(--primary-red);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.info-email-link:hover {
+    text-decoration: underline;
+}
+
 .footer-bottom {
     text-align: center;
     padding-top: 1.75rem;
