@@ -46,6 +46,9 @@ body {
     overflow-x: hidden;
 }
 
+/* Ensure [hidden] always wins regardless of display set by other rules */
+[hidden] { display: none !important; }
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
