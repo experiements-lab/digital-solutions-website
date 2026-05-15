@@ -65,12 +65,27 @@
                         Fill out the form below and we'll get back to you within 24 hours to discuss
                         your project requirements and how we can help.
                     </p>
-                    <form class="contact-form" id="contactForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-                        <!-- Hidden fields for Netlify Forms -->
-                        <input type="hidden" name="form-name" value="contact">
-                        <p class="hidden">
-                            <label>Don't fill this out if you're human: <input name="bot-field"></label>
-                        </p>
+
+                    <!-- Success state -->
+                    <div class="form-success" id="formSuccess" hidden>
+                        <div class="form-success-icon"><i data-lucide="circle-check-big"></i></div>
+                        <h3>Message Sent!</h3>
+                        <p>Thank you for reaching out. We'll be in touch within 24 hours.</p>
+                    </div>
+
+                    <!-- Error state -->
+                    <div class="form-error-banner" id="formErrorBanner" hidden>
+                        <i data-lucide="triangle-alert"></i>
+                        <span>Something went wrong. Please try again or email us directly at <a href="mailto:info@dscsa.co.za">info@dscsa.co.za</a>.</span>
+                    </div>
+
+                    <form class="contact-form" id="contactForm" novalidate>
+                        <!-- Web3Forms -->
+                        <input type="hidden" name="access_key" value="fae4a97d-a05f-4207-b1be-dad8c7336d55">
+                        <input type="hidden" name="subject" value="New Enquiry - Digital Solutions Consulting">
+                        <input type="hidden" name="from_name" value="DSC Website">
+                        <!-- Honeypot spam filter -->
+                        <input type="checkbox" name="botcheck" style="display:none">
 
                         <div class="form-group">
                             <label for="name">Full Name *</label>
@@ -137,7 +152,12 @@
                             <textarea id="message" name="message" rows="6" required placeholder="Tell us about your project, goals, and any specific requirements..."></textarea>
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-large">Send Message</button>
+                        <button type="submit" class="btn btn-primary btn-large" id="submitBtn">
+                            <span class="btn-text">Send Message</span>
+                            <span class="btn-loading" hidden>
+                                <i data-lucide="loader-circle"></i> Sending...
+                            </span>
+                        </button>
                     </form>
                 </div>
 
