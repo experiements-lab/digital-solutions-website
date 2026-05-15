@@ -6,38 +6,55 @@ document.addEventListener('DOMContentLoaded', function() {
     // === MOBILE MENU TOGGLE ===
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const navMenu = document.getElementById('navMenu');
+    const navBackdrop = document.getElementById('navBackdrop');
+
+    function setHamburger(open) {
+        const spans = mobileMenuToggle.querySelectorAll('span');
+        if (open) {
+            spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+            spans[1].style.opacity = '0';
+            spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+        } else {
+            spans[0].style.transform = 'none';
+            spans[1].style.opacity = '1';
+            spans[2].style.transform = 'none';
+        }
+    }
+
+    function openMenu() {
+        navMenu.classList.add('active');
+        mobileMenuToggle.classList.add('active');
+        document.body.classList.add('menu-open');
+        if (navBackdrop) navBackdrop.classList.add('active');
+        setHamburger(true);
+    }
+
+    function closeMenu() {
+        navMenu.classList.remove('active');
+        mobileMenuToggle.classList.remove('active');
+        document.body.classList.remove('menu-open');
+        if (navBackdrop) navBackdrop.classList.remove('active');
+        setHamburger(false);
+    }
 
     if (mobileMenuToggle && navMenu) {
         mobileMenuToggle.addEventListener('click', function() {
-            navMenu.classList.toggle('active');
-            mobileMenuToggle.classList.toggle('active');
-
-            // Animate hamburger icon
-            const spans = mobileMenuToggle.querySelectorAll('span');
-            if (navMenu.classList.contains('active')) {
-                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-                spans[1].style.opacity = '0';
-                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
-            } else {
-                spans[0].style.transform = 'none';
-                spans[1].style.opacity = '1';
-                spans[2].style.transform = 'none';
-            }
+            navMenu.classList.contains('active') ? closeMenu() : openMenu();
         });
 
-        // Close menu when clicking on a link
-        const navLinks = navMenu.querySelectorAll('.nav-link');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                navMenu.classList.remove('active');
-                mobileMenuToggle.classList.remove('active');
+        // Close on nav link tap
+        navMenu.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
 
-                // Reset hamburger icon
-                const spans = mobileMenuToggle.querySelectorAll('span');
-                spans[0].style.transform = 'none';
-                spans[1].style.opacity = '1';
-                spans[2].style.transform = 'none';
-            });
+        // Close on backdrop tap
+        if (navBackdrop) {
+            navBackdrop.addEventListener('click', closeMenu);
+        }
+
+        // Close on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && navMenu.classList.contains('active')) closeMenu();
         });
     }
 
