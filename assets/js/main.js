@@ -126,67 +126,75 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.addEventListener('scroll', activateNavOnScroll);
 
-    // === FORM VALIDATION AND SUBMISSION ===
+    // === CONTACT FORM — Web3Forms ===
     const contactForm = document.getElementById('contactForm');
 
     if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            // Basic validation
-            const name = document.getElementById('name');
-            const email = document.getElementById('email');
-            const service = document.getElementById('service');
-            const message = document.getElementById('message');
+        const submitBtn      = document.getElementById('submitBtn');
+        const btnText        = submitBtn.querySelector('.btn-text');
+        const btnLoading     = submitBtn.querySelector('.btn-loading');
+        const successPanel   = document.getElementById('formSuccess');
+        const errorBanner    = document.getElementById('formErrorBanner');
 
-            let isValid = true;
+        function setLoading(on) {
+            btnText.hidden    = on;
+            btnLoading.hidden = !on;
+            submitBtn.disabled = on;
+        }
 
-            // Validate name
-            if (name && name.value.trim() === '') {
-                showError(name, 'Please enter your name');
-                isValid = false;
-            }
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
 
-            // Validate email
-            if (email && !isValidEmail(email.value)) {
-                showError(email, 'Please enter a valid email address');
-                isValid = false;
-            }
+            // Client-side validation
+            const nameEl    = document.getElementById('name');
+            const emailEl   = document.getElementById('email');
+            const serviceEl = document.getElementById('service');
+            const msgEl     = document.getElementById('message');
+            let valid = true;
 
-            // Validate service selection
-            if (service && service.value === '') {
-                showError(service, 'Please select a service');
-                isValid = false;
-            }
+            if (!nameEl.value.trim())          { showError(nameEl,    'Please enter your name');              valid = false; }
+            if (!isValidEmail(emailEl.value))  { showError(emailEl,   'Please enter a valid email address');  valid = false; }
+            if (!serviceEl.value)              { showError(serviceEl, 'Please select a service');             valid = false; }
+            if (!msgEl.value.trim())           { showError(msgEl,     'Please describe your project');        valid = false; }
+            if (!valid) return;
 
-            // Validate message
-            if (message && message.value.trim() === '') {
-                showError(message, 'Please describe your project');
-                isValid = false;
-            }
+            // Submit to Web3Forms
+            setLoading(true);
+            errorBanner.hidden = true;
 
-            if (!isValid) {
-                e.preventDefault();
-            } else {
-                // If using Netlify Forms, the form will submit automatically
-                // Show success message (optional)
-                console.log('Form is valid and ready to submit');
+            try {
+                const res  = await fetch('https://api.web3forms.com/submit', {
+                    method:  'POST',
+                    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                    body:    JSON.stringify(Object.fromEntries(new FormData(contactForm)))
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    contactForm.hidden  = true;
+                    successPanel.hidden = false;
+                    if (typeof lucide !== 'undefined') lucide.createIcons();
+                } else {
+                    throw new Error(data.message || 'Submission failed');
+                }
+            } catch {
+                errorBanner.hidden = false;
+                errorBanner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } finally {
+                setLoading(false);
             }
         });
 
-        // Remove error styling on input
-        const formInputs = contactForm.querySelectorAll('input, select, textarea');
-        formInputs.forEach(input => {
+        // Clear errors on focus
+        contactForm.querySelectorAll('input, select, textarea').forEach(input => {
             input.addEventListener('focus', function() {
                 this.style.borderColor = 'var(--primary-red)';
-                const errorMsg = this.parentElement.querySelector('.error-message');
-                if (errorMsg) {
-                    errorMsg.remove();
-                }
+                const err = this.parentElement.querySelector('.error-message');
+                if (err) err.remove();
             });
-
             input.addEventListener('blur', function() {
-                const hasError = this.parentElement.querySelector('.error-message');
-                if (!hasError) {
-                    this.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                if (!this.parentElement.querySelector('.error-message')) {
+                    this.style.borderColor = 'rgba(255,255,255,0.1)';
                 }
             });
         });
