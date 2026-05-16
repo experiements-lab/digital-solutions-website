@@ -1569,6 +1569,31 @@ section {
     flex-shrink: 0;
 }
 
+/* App star rating */
+.app-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.rating-stars {
+    color: var(--secondary-gold);
+    font-size: 1rem;
+    letter-spacing: -1px;
+}
+
+.rating-score {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.rating-count {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
 /* Store link buttons */
 .store-links {
     display: flex;
