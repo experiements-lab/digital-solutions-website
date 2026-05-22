@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a; --surface: #111111; --surface2: #1a1a1a;
+      --border: rgba(255,255,255,0.08); --text: #f0f0f0; --muted: #888888;
+      --accent: #6366f1; --accent-hover: #4f52e0;
+      --error: #f87171; --success: #4ade80; --radius: 12px;
+    }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem; }
+    .wordmark { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 2rem; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; width: 100%; max-width: 400px; }
+    h1 { font-size: 1.375rem; font-weight: 600; margin-bottom: 1.5rem; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .field { margin-bottom: 1.125rem; }
+    label { display: block; font-size: 0.8125rem; font-weight: 500; color: var(--muted); margin-bottom: 0.375rem; }
+    input[type=email], input[type=password], input[type=text] { width: 100%; padding: 0.6875rem 0.875rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: inherit; font-size: 0.9375rem; transition: border-color 0.15s; }
+    input:focus { outline: none; border-color: var(--accent); }
+    input.input-error { border-color: var(--error); }
+    .field-error { font-size: 0.75rem; color: var(--error); margin-top: 0.3rem; }
+    .flow-messages { margin-bottom: 1rem; }
+    .flow-message { font-size: 0.8125rem; padding: 0.6rem 0.875rem; border-radius: 6px; margin-bottom: 0.5rem; }
+    .flow-message.error { background: rgba(248,113,113,0.12); color: var(--error); }
+    .flow-message.success { background: rgba(74,222,128,0.12); color: var(--success); }
+    .flow-message.info { background: rgba(99,102,241,0.12); color: #a5b4fc; }
+    .btn { display: block; width: 100%; padding: 0.75rem; background: var(--accent); border: none; border-radius: 8px; color: #fff; font-family: inherit; font-size: 0.9375rem; font-weight: 600; cursor: pointer; margin-top: 0.5rem; transition: background 0.15s; }
+    .btn:hover { background: var(--accent-hover); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .links { display: flex; justify-content: center; margin-top: 1.25rem; font-size: 0.8125rem; color: var(--muted); }
+    .links a { color: var(--accent); text-decoration: none; }
+    .links a:hover { text-decoration: underline; }
+    .hidden { display: none !important; }
+    .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; display: inline-block; animation: spin 0.6s linear infinite; margin-right: 0.5rem; vertical-align: middle; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="wordmark">Auth Service</div>
+
+  <div class="card">
+    <h1>Create account</h1>
+
+    <div class="flow-messages" id="flow-messages"></div>
+
+    <form id="reg-form" method="POST" action="">
+      <input type="hidden" name="csrf_token" id="csrf-token">
+
+      <div class="row">
+        <div class="field">
+          <label for="traits.name.first">First name</label>
+          <input type="text" id="traits.name.first" name="traits.name.first" autocomplete="given-name">
+          <div class="field-error hidden" id="err-traits.name.first"></div>
+        </div>
+        <div class="field">
+          <label for="traits.name.last">Last name</label>
+          <input type="text" id="traits.name.last" name="traits.name.last" autocomplete="family-name">
+          <div class="field-error hidden" id="err-traits.name.last"></div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="traits.email">Email</label>
+        <input type="email" id="traits.email" name="traits.email" autocomplete="email" required>
+        <div class="field-error hidden" id="err-traits.email"></div>
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" autocomplete="new-password" required>
+        <div class="field-error hidden" id="err-password"></div>
+      </div>
+
+      <input type="hidden" name="method" value="password">
+
+      <button type="submit" class="btn" id="submit-btn">
+        <span class="hidden" id="loading"><span class="spinner"></span></span>
+        Create account
+      </button>
+    </form>
+
+    <div class="links">
+      <span>Already have an account? <a href="/login">Sign in</a></span>
+    </div>
+  </div>
+
+  <script>
+    const KRATOS = 'http://localhost:4433';
+    const params = new URLSearchParams(location.search);
+    const flowId = params.get('flow');
+
+    if (!flowId) {
+      location.replace(`${KRATOS}/self-service/registration/browser`);
+    } else {
+      fetch(`${KRATOS}/self-service/registration/flows?id=${flowId}`, {
+        credentials: 'include',
+        headers: { Accept: 'application/json' }
+      })
+      .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(flow => {
+        const form = document.getElementById('reg-form');
+        form.action = flow.ui.action;
+
+        const csrfNode = flow.ui.nodes.find(n => n.attributes?.name === 'csrf_token');
+        if (csrfNode) document.getElementById('csrf-token').value = csrfNode.attributes.value;
+
+        const msgs = document.getElementById('flow-messages');
+        (flow.ui.messages || []).forEach(m => {
+          const el = document.createElement('div');
+          el.className = `flow-message ${m.type || 'error'}`;
+          el.textContent = m.text;
+          msgs.appendChild(el);
+        });
+
+        flow.ui.nodes.forEach(node => {
+          const name = node.attributes?.name;
+          const errEl = document.getElementById(`err-${name}`);
+          if (errEl && node.messages?.length) {
+            errEl.textContent = node.messages.map(m => m.text).join(' ');
+            errEl.classList.remove('hidden');
+            const input = document.getElementById(name);
+            if (input) input.classList.add('input-error');
+          }
+        });
+      })
+      .catch(() => location.replace('/registration'));
+
+      document.getElementById('reg-form').addEventListener('submit', () => {
+        document.getElementById('submit-btn').disabled = true;
+        document.getElementById('loading').classList.remove('hidden');
+      });
+    }
+  </script>
+</body>
+</html>

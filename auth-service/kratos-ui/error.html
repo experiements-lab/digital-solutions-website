@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #0a0a0a; --surface: #111111; --border: rgba(255,255,255,0.08); --text: #f0f0f0; --muted: #888888; --error: #f87171; --accent: #6366f1; --radius: 12px; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem; }
+    .wordmark { font-size: 1.25rem; font-weight: 600; margin-bottom: 2rem; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; width: 100%; max-width: 400px; text-align: center; }
+    .icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    h1 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; }
+    .reason { font-size: 0.875rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.5rem; }
+    .code { font-size: 0.75rem; color: var(--error); font-family: monospace; background: rgba(248,113,113,0.08); padding: 0.25rem 0.5rem; border-radius: 4px; display: inline-block; margin-bottom: 1.5rem; }
+    a { display: inline-block; color: var(--accent); text-decoration: none; font-size: 0.875rem; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="wordmark">Auth Service</div>
+
+  <div class="card">
+    <div class="icon">⚠️</div>
+    <h1 id="title">Something went wrong</h1>
+    <p class="reason" id="reason">An unexpected error occurred during authentication.</p>
+    <div class="code hidden" id="code-block"></div>
+    <a href="/login">← Back to sign in</a>
+  </div>
+
+  <script>
+    const KRATOS = 'http://localhost:4433';
+    const id = new URLSearchParams(location.search).get('id');
+
+    if (id) {
+      fetch(`${KRATOS}/self-service/errors?id=${id}`, {
+        credentials: 'include',
+        headers: { Accept: 'application/json' }
+      })
+      .then(r => r.json())
+      .then(data => {
+        const err = data.error || data;
+        if (err.reason)  document.getElementById('reason').textContent = err.reason;
+        if (err.message) document.getElementById('title').textContent  = err.message;
+        if (err.code) {
+          const codeEl = document.getElementById('code-block');
+          codeEl.textContent = `Error ${err.code}`;
+          codeEl.classList.remove('hidden');
+        }
+      })
+      .catch(() => {});
+    }
+  </script>
+</body>
+</html>

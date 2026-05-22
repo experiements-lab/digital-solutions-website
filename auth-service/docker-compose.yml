@@ -1,0 +1,115 @@
+version: "3.8"
+
+services:
+
+  # ── Database ────────────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-authsvc}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-auth}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks: [auth-net]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-authsvc}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # ── Hydra ───────────────────────────────────────────────────────────────────
+  hydra-migrate:
+    image: oryd/hydra:v2.2
+    command: migrate sql --yes "${HYDRA_DSN}"
+    environment:
+      DSN: ${HYDRA_DSN}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [auth-net]
+    restart: on-failure
+
+  hydra:
+    image: oryd/hydra:v2.2
+    command: serve all --config /etc/hydra/hydra.yml
+    volumes:
+      - ./hydra/hydra.yml:/etc/hydra/hydra.yml:ro
+    environment:
+      DSN: ${HYDRA_DSN}
+      SECRETS_SYSTEM: ${HYDRA_SYSTEM_SECRET}
+      SECRETS_COOKIE: ${HYDRA_COOKIE_SECRET}
+    ports:
+      - "4444:4444"   # public  — apps redirect users here
+      - "4445:4445"   # admin   — internal only, do not expose in prod
+    depends_on:
+      hydra-migrate:
+        condition: service_completed_successfully
+    networks: [auth-net]
+    restart: unless-stopped
+
+  # ── Kratos ──────────────────────────────────────────────────────────────────
+  kratos-migrate:
+    image: oryd/kratos:v1.2
+    command: migrate sql --yes "${KRATOS_DSN}"
+    environment:
+      DSN: ${KRATOS_DSN}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [auth-net]
+    restart: on-failure
+
+  kratos:
+    image: oryd/kratos:v1.2
+    command: serve --config /etc/kratos/kratos.yml --dev
+    volumes:
+      - ./kratos:/etc/kratos:ro
+    environment:
+      DSN: ${KRATOS_DSN}
+      SECRETS_DEFAULT: ${KRATOS_COOKIE_SECRET}
+      COURIER_SMTP_CONNECTION_URI: ${SMTP_URI}
+    ports:
+      - "4433:4433"   # public  — self-service API (login, signup flows)
+      - "4434:4434"   # admin   — internal only
+    depends_on:
+      kratos-migrate:
+        condition: service_completed_successfully
+    networks: [auth-net]
+    restart: unless-stopped
+
+  # ── Consent App ─────────────────────────────────────────────────────────────
+  consent-app:
+    build: ./consent-app
+    environment:
+      HYDRA_ADMIN_URL: ${HYDRA_ADMIN_URL:-http://hydra:4445}
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    depends_on: [hydra]
+    networks: [auth-net]
+    restart: unless-stopped
+
+  # ── Self-Service UI (branded login/signup pages) ─────────────────────────────
+  kratos-ui:
+    build: ./kratos-ui
+    ports:
+      - "4455:80"
+    networks: [auth-net]
+    restart: unless-stopped
+
+  # ── Dev SMTP (Mailhog) ───────────────────────────────────────────────────────
+  mailhog:
+    image: mailhog/mailhog:latest
+    ports:
+      - "8025:8025"   # web UI — view sent emails during development
+      - "1025:1025"   # SMTP
+    networks: [auth-net]
+
+networks:
+  auth-net:
+    driver: bridge
+
+volumes:
+  pgdata:

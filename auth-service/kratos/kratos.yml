@@ -1,0 +1,118 @@
+version: v1.2.0
+
+# DSN is overridden by the DSN env var at runtime (set in docker-compose).
+dsn: memory
+
+serve:
+  public:
+    base_url: http://localhost:4433/
+    cors:
+      enabled: true
+      allowed_origins:
+        - http://localhost:4455   # Kratos UI
+        - http://localhost:3000   # consent app
+      allowed_headers:
+        - Authorization
+        - Content-Type
+        - X-Session-Token
+      exposed_headers:
+        - Content-Type
+      allow_credentials: true
+  admin:
+    base_url: http://kratos:4434/
+
+# ── Critical wiring: Kratos calls Hydra admin API after successful login ─────
+# When Hydra redirects to Kratos with ?login_challenge=, Kratos detects it and
+# after authenticating the user automatically calls:
+#   PUT http://hydra:4445/admin/oauth2/auth/requests/login/accept
+# No custom code needed — this is built into Kratos.
+oauth2_provider:
+  url: http://hydra:4445   # MUST be the admin URL, not the public URL
+
+selfservice:
+  default_browser_return_url: http://localhost:4455/
+
+  allowed_return_urls:
+    - http://localhost:4455/
+    - http://localhost:4444/
+    - http://localhost:3000/
+
+  methods:
+    password:
+      enabled: true
+      config:
+        # Minimum password length enforced by Haveibeenpwned + length check
+        min_password_length: 8
+        identifier_similarity_check_enabled: true
+    profile:
+      enabled: true
+    link:
+      enabled: true   # magic link for recovery
+    code:
+      enabled: true   # OTP code for verification
+
+  flows:
+    error:
+      ui_url: http://localhost:4455/error
+
+    settings:
+      ui_url: http://localhost:4455/settings
+      privileged_session_max_age: 15m
+      after:
+        default_browser_return_url: http://localhost:4455/settings
+
+    recovery:
+      enabled: true
+      ui_url: http://localhost:4455/recovery
+      after:
+        default_browser_return_url: http://localhost:4455/login
+
+    verification:
+      enabled: true
+      use: code   # send a 6-digit code, not a magic link
+      ui_url: http://localhost:4455/verification
+      after:
+        default_browser_return_url: http://localhost:4455/
+
+    logout:
+      after:
+        default_browser_return_url: http://localhost:4455/login
+
+    login:
+      ui_url: http://localhost:4455/login
+      lifespan: 10m
+      after:
+        default_browser_return_url: http://localhost:4455/
+
+    registration:
+      lifespan: 10m
+      ui_url: http://localhost:4455/registration
+      after:
+        password:
+          hooks:
+            - hook: session           # log the user in immediately after signup
+            - hook: show_verification_ui
+
+session:
+  cookie:
+    domain: localhost   # set to your root domain in production (e.g. example.com)
+    same_site: Lax
+  lifespan: 720h   # 30 days
+
+identity:
+  default_schema_id: default
+  schemas:
+    - id: default
+      url: file:///etc/kratos/identity.schema.json
+
+courier:
+  smtp:
+    # Overridden by COURIER_SMTP_CONNECTION_URI env var at runtime.
+    connection_uri: smtp://mailhog:1025/?disable_starttls=true
+    from_address: no-reply@auth.local
+    from_name: "Auth Service"
+
+log:
+  level: info
+  format: json
+  leak_sensitive_values: false

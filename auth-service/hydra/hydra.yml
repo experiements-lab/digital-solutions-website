@@ -1,0 +1,41 @@
+serve:
+  public:
+    host: 0.0.0.0
+    port: 4444
+    cors:
+      enabled: true
+      allowed_origins:
+        - "*"
+      allowed_methods:
+        - GET
+        - POST
+  admin:
+    host: 0.0.0.0
+    port: 4445
+
+# DSN and SECRETS_* are injected via environment variables by docker-compose.
+# Hydra reads DSN, SECRETS_SYSTEM, and SECRETS_COOKIE automatically.
+
+urls:
+  self:
+    # Update to your public domain in production.
+    issuer: http://localhost:4444
+  login:    http://localhost:4455/login        # Kratos UI — users land here
+  consent:  http://localhost:3000/consent      # consent app
+  logout:   http://localhost:3000/logout       # consent app
+
+oauth2:
+  expose_internal_errors: false
+  pkce:
+    # Enforce PKCE for all clients. Safe default — prevents auth code interception.
+    enforced: true
+
+ttl:
+  login_consent_request: 30m
+  access_token:  1h
+  refresh_token: 720h   # 30 days
+  id_token:      1h
+
+log:
+  level: info
+  format: json

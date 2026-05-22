@@ -35,3 +35,8 @@ build/
 # Backup Files
 *.bak
 *.backup
+
+# Auth service — secrets (never commit)
+auth-service/.env
+auth-service/node_modules/
+auth-service/consent-app/node_modules/
