@@ -1555,6 +1555,16 @@ section {
     letter-spacing: 0.03em;
 }
 
+.flagship-badge {
+    display: block;
+    color: var(--secondary-gold);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+}
+
 .case-study-subtitle { color: var(--secondary-gold); font-size: 1.15rem; margin-bottom: 1.5rem; }
 
 /* Live badge */
