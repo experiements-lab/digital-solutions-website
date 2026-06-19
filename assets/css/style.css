@@ -563,6 +563,25 @@ section {
     gap: 1.125rem;
 }
 
+.services-studio-header {
+    margin-top: 3rem;
+    margin-bottom: 1.75rem;
+}
+
+.services-studio-header h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.services-grid-studio {
+    grid-template-columns: minmax(280px, 360px);
+}
+
+.service-card-studio {
+    opacity: 0.92;
+}
+
 .service-card {
     background: var(--dark-bg-tertiary);
     padding: 2.25rem;
@@ -2497,6 +2516,13 @@ body.menu-open {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+}
+
+.tab-nav-divider {
+    width: 1px;
+    margin: 6px 0.25rem;
+    background: var(--border-subtle);
+    flex-shrink: 0;
 }
 
 .tab-panel {
