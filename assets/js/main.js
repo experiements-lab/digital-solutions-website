@@ -345,8 +345,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 io.unobserve(entry.target);
                 const el  = entry.target;
                 const raw = el.textContent.trim();
-                const num = parseInt(raw.replace(/\D/g, ''), 10);
-                const sfx = raw.replace(/\d/g, '');
+                const numMatches = raw.match(/\d+/g) || [];
+                if (numMatches.length !== 1) return; // skip animation for non-numeric or multi-number text (e.g. "30 → 7 Days")
+                const num = parseInt(numMatches[0], 10);
+                const sfx = raw.replace(numMatches[0], '');
                 if (isNaN(num)) return;
                 el.classList.add('counting');
                 const dur = 1500;
