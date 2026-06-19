@@ -1555,6 +1555,29 @@ section {
     letter-spacing: 0.03em;
 }
 
+.case-study-testimonial {
+    margin: 2.5rem 0;
+    padding: 1.75rem 2rem;
+    border-left: 3px solid var(--secondary-gold);
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 0 12px 12px 0;
+}
+
+.case-study-testimonial p {
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+}
+
+.case-study-testimonial cite {
+    display: block;
+    font-style: normal;
+    font-weight: 600;
+    color: var(--secondary-gold);
+    font-size: 0.9rem;
+}
+
 .flagship-badge {
     display: block;
     color: var(--secondary-gold);
