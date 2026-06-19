@@ -11,7 +11,7 @@ A modern, responsive website for Digital Solutions Consulting - showcasing IT co
 - **Fast Loading** - Optimized for performance
 - **SEO Optimized** - Meta tags and semantic HTML for better search engine visibility
 - **Interactive Elements** - Smooth scrolling, animations, and dynamic navigation
-- **Contact Form** - Netlify Forms integration for easy contact management
+- **Contact Form** - Web3Forms integration for easy contact management
 - **GitHub Pages Ready** - Simple deployment to GitHub Pages
 
 ## 📁 Project Structure
@@ -58,7 +58,7 @@ website/
 1. **Create a GitHub Repository**
    ```bash
    # Navigate to the website directory
-   cd "c:\Users\Administrator\Documents\Digital Solutions Consulting\website"
+   cd digital-solutions-website
 
    # Initialize git repository
    git init
@@ -107,7 +107,7 @@ website/
 2. **Create Repository**
    - Open GitHub Desktop
    - Click "File" → "Add Local Repository"
-   - Browse to: `c:\Users\Administrator\Documents\Digital Solutions Consulting\website`
+   - Browse to your local clone of this repository
    - If prompted, click "Create Repository"
 
 3. **Publish to GitHub**
@@ -131,7 +131,7 @@ website/
 #### Option 1: Using Python's Built-in Server
 ```bash
 # Navigate to website directory
-cd "c:\Users\Administrator\Documents\Digital Solutions Consulting\website"
+cd digital-solutions-website
 
 # Python 3
 python -m http.server 8000
@@ -145,7 +145,7 @@ python -m http.server 8000
 npm install -g http-server
 
 # Navigate to website directory
-cd "c:\Users\Administrator\Documents\Digital Solutions Consulting\website"
+cd digital-solutions-website
 
 # Start server
 http-server
@@ -214,33 +214,11 @@ section {
 
 ## 📧 Contact Form Setup
 
-The contact form uses Netlify Forms for easy form handling.
+The contact form uses [Web3Forms](https://web3forms.com) for form handling, which works on static hosts like GitHub Pages without a server. Submissions are delivered by email using an access key embedded in `contact.html` (a hidden `access_key` input).
 
-### Using with Netlify
-
-If deploying to Netlify (recommended for forms):
-1. Connect your GitHub repository to Netlify
-2. Deploy the site
-3. Forms will automatically work - submissions appear in Netlify dashboard
-
-### Using with GitHub Pages
-
-GitHub Pages doesn't support server-side form processing. Options:
-
-1. **Use Formspree** (Free tier available)
-   - Sign up at [formspree.io](https://formspree.io)
-   - Update form action in `contact.html`:
-   ```html
-   <form action="https://formspree.io/f/YOUR-FORM-ID" method="POST">
-   ```
-
-2. **Use Google Forms**
-   - Create a Google Form
-   - Embed it in `contact.html`
-
-3. **Use Netlify Forms (Keep Current Setup)**
-   - Deploy to Netlify instead of GitHub Pages
-   - Forms will work automatically
+To point the form at a different Web3Forms account:
+1. Sign up at [web3forms.com](https://web3forms.com) and create an access key
+2. Replace the `access_key` value in the hidden input in `contact.html`
 
 ## 🎯 SEO Optimization
 
@@ -274,8 +252,8 @@ Tested and compatible with:
 - Verify image file names match exactly (case-sensitive)
 
 ### Form Not Working
-- For GitHub Pages, use Formspree or alternative
-- For Netlify, ensure `data-netlify="true"` attribute is present
+- Confirm the `access_key` hidden input in `contact.html` matches a valid Web3Forms access key
+- Check the Web3Forms dashboard for delivery status
 
 ### Styles Not Applying
 - Clear browser cache (Ctrl+Shift+R or Cmd+Shift+R)
@@ -315,7 +293,7 @@ Add this to `<head>` section of all pages:
 
 ## 🌐 Custom Domain Setup
 
-To use a custom domain (e.g., `www.digitalsolutions.co.za`):
+To use a custom domain (e.g., `www.digitalsolutionsconsulting.co.za`, the domain already configured via the `CNAME` file in this repo):
 
 1. **Purchase Domain** from registrar (e.g., Afrihost, GoDaddy)
 
@@ -357,11 +335,11 @@ To use a custom domain (e.g., `www.digitalsolutions.co.za`):
 For questions or issues:
 - Review this documentation
 - Check GitHub Issues
-- Contact: [Your contact information]
+- Contact: info@dscsa.co.za
 
 ## 📄 License
 
-© 2025 Digital Solutions Consulting. All rights reserved.
+© 2026 Digital Solutions Consulting. All rights reserved.
 
 ---
 

@@ -20,7 +20,7 @@
 
 #### Option B: Using Command Line
 ```bash
-cd "c:\Users\Administrator\Documents\Digital Solutions Consulting\website"
+cd digital-solutions-website
 git init
 git add .
 git commit -m "Initial website commit"
@@ -52,28 +52,12 @@ After deployment, check:
 
 ## 📝 Next Steps
 
-### 1. Set Up Contact Form
-Choose one option:
+### 1. Contact Form (Already Set Up)
+The contact form already uses [Web3Forms](https://web3forms.com), which works out of the box on GitHub Pages — no extra deployment step needed. Submissions are sent by email using the access key embedded in `contact.html`.
 
-**Option A: Deploy to Netlify (Recommended - Forms work automatically)**
-1. Go to [netlify.com](https://www.netlify.com) and sign up
-2. Click "Add new site" → "Import an existing project"
-3. Choose GitHub and select your repository
-4. Click "Deploy site"
-5. Forms will work automatically!
-
-**Option B: Use Formspree (Stay on GitHub Pages)**
-1. Sign up at [formspree.io](https://formspree.io)
-2. Create a new form
-3. Copy your form endpoint
-4. Edit `contact.html`:
-```html
-<!-- Replace this line -->
-<form class="contact-form" id="contactForm" name="contact" method="POST" data-netlify="true">
-
-<!-- With this -->
-<form class="contact-form" id="contactForm" method="POST" action="https://formspree.io/f/YOUR-FORM-ID">
-```
+To use your own Web3Forms account instead:
+1. Sign up at [web3forms.com](https://web3forms.com) and create an access key
+2. Replace the `access_key` value in the hidden input inside the form in `contact.html`
 
 ### 2. Add Your Contact Information
 Edit the footer in all HTML files to add:
@@ -142,7 +126,7 @@ Edit `assets/css/style.css`:
 
 Common resources:
 - [GitHub Pages Documentation](https://docs.github.com/en/pages)
-- [Netlify Documentation](https://docs.netlify.com)
+- [Web3Forms Documentation](https://docs.web3forms.com)
 - [Web Development on MDN](https://developer.mozilla.org)
 
 ## 🎉 You're Done!
