@@ -311,7 +311,6 @@ p {
     background: radial-gradient(circle at center, rgba(251, 57, 66, 0.16) 0%, transparent 65%);
     top: -180px;
     left: -180px;
-    animation: orbFloat1 14s ease-in-out infinite;
     filter: blur(48px);
 }
 
@@ -321,7 +320,6 @@ p {
     background: radial-gradient(circle at center, rgba(224, 150, 37, 0.13) 0%, transparent 65%);
     bottom: -120px;
     right: -120px;
-    animation: orbFloat2 18s ease-in-out infinite;
     filter: blur(48px);
 }
 
@@ -331,7 +329,6 @@ p {
     background: radial-gradient(circle at center, rgba(251, 57, 66, 0.09) 0%, transparent 65%);
     top: 40%;
     left: 58%;
-    animation: orbFloat3 11s ease-in-out infinite;
     filter: blur(60px);
 }
 
@@ -2030,23 +2027,6 @@ section {
     100% { opacity: 0; transform: translateX(-50%) translateY(10px); }
 }
 
-@keyframes orbFloat1 {
-    0%, 100% { transform: translate(0, 0)    scale(1); }
-    33%      { transform: translate(45px, -45px) scale(1.06); }
-    66%      { transform: translate(-25px, 30px) scale(0.94); }
-}
-
-@keyframes orbFloat2 {
-    0%, 100% { transform: translate(0, 0)     scale(1); }
-    33%      { transform: translate(-50px, 35px) scale(0.94); }
-    66%      { transform: translate(30px, -45px) scale(1.06); }
-}
-
-@keyframes orbFloat3 {
-    0%, 100% { transform: translate(0, 0); }
-    50%      { transform: translate(-45px, -45px) scale(1.12); }
-}
-
 @keyframes pulseDot {
     0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 6px rgba(251, 57, 66, 0.6); }
     50%      { opacity: 0.55; transform: scale(1.4); box-shadow: 0 0 10px rgba(251, 57, 66, 0.3); }
@@ -2302,45 +2282,24 @@ body.menu-open {
     z-index: 0;
 }
 
-/* === MARQUEE === */
+/* === TECH/INDUSTRY STRIP === */
 .marquee-section {
-    overflow: hidden;
     background: var(--dark-bg);
     padding: 1.625rem 0;
     border-top: 1px solid var(--border-subtle);
     border-bottom: 1px solid var(--border-subtle);
-    -webkit-mask-image: linear-gradient(
-        90deg, transparent 0%, black 7%, black 93%, transparent 100%
-    );
-    mask-image: linear-gradient(
-        90deg, transparent 0%, black 7%, black 93%, transparent 100%
-    );
 }
 
 .marquee-row {
-    overflow: hidden;
     margin-bottom: 0.5rem;
 }
 .marquee-row:last-child { margin-bottom: 0; }
 
 .marquee-track {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 0.5rem;
-    width: max-content;
-    animation: marqueeLeft 30s linear infinite;
-    will-change: transform;
-}
-
-.marquee-track.marquee-reverse {
-    animation-direction: reverse;
-    animation-duration: 38s;
-}
-
-.marquee-track:hover { animation-play-state: paused; }
-
-@keyframes marqueeLeft {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
 }
 
 .marquee-item {
@@ -2418,36 +2377,6 @@ body.menu-open {
 
 @keyframes borderBeam {
     to { --border-angle: 360deg; }
-}
-
-/* === SHIMMER BUTTON === */
-.btn-primary::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -110%;
-    width: 55%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.2),
-        transparent
-    );
-    transform: skewX(-20deg);
-    animation: shimmerBtn 5s ease-in-out infinite;
-    animation-delay: 2.5s;
-    pointer-events: none;
-}
-
-/* Don't double-shimmer the nav pill button */
-.nav-link.btn-primary::after { display: none; }
-
-@keyframes shimmerBtn {
-    0%   { left: -110%; opacity: 1; }
-    45%  { left: 160%;  opacity: 1; }
-    46%  { opacity: 0; }
-    100% { left: 160%;  opacity: 0; }
 }
 
 /* ===================================
