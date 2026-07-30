@@ -27,6 +27,12 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
+        with:
+          # Re-create the Pages site if it is not currently enabled. Flipping the
+          # repository to private unpublishes Pages, and flipping back to public
+          # does not restore it, so without this the deploy fails on "Get Pages
+          # site failed".
+          enablement: true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
