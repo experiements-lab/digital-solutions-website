@@ -6,8 +6,10 @@ DIGITAL SOLUTIONS CONSULTING - WEBSITE PROJECT STRUCTURE
 ├── 📄 index.html                    # Homepage - Hero, Services, 4D Framework
 ├── 📄 about.html                    # About - Vision, Mission, Founder, Values
 ├── 📄 services.html                 # Services - All 4 categories + Pricing
-├── 📄 portfolio.html                # Portfolio - 3 Case Studies
+├── 📄 portfolio.html                # Portfolio - 5 Case Studies
 ├── 📄 contact.html                  # Contact - Form + FAQ
+├── 📄 privacy.html                  # Privacy Policy
+├── 📄 terms.html                    # Terms of Service
 │
 ├── 📁 assets/
 │   ├── 📁 css/
@@ -18,11 +20,7 @@ DIGITAL SOLUTIONS CONSULTING - WEBSITE PROJECT STRUCTURE
 │   │
 │   └── 📁 images/
 │       ├── 🖼️ Logo.png              # Company logo
-│       ├── 🖼️ background-image.png # Gradient background
-│       ├── 🖼️ craft.gif            # Design animation
-│       ├── 🖼️ growth.gif           # Growth animation
-│       ├── 🖼️ germination.gif      # Water animation
-│       └── 🖼️ spark.gif            # Innovation animation
+│       └── 🖼️ background-image.png # Gradient background
 │
 ├── 📁 .github/
 │   └── 📁 workflows/
@@ -37,19 +35,19 @@ DIGITAL SOLUTIONS CONSULTING - WEBSITE PROJECT STRUCTURE
 ========================================================
 TOTAL FILES
 ========================================================
-HTML Pages:          5 files
+HTML Pages:          7 files
 CSS Files:           1 file (1000+ lines)
 JavaScript Files:    1 file (300+ lines)
-Images/Assets:       7 files
+Images/Assets:       2 files
 Documentation:       4 files
 Configuration:       2 files
 ─────────────────────────────────
-TOTAL:              20 files
+TOTAL:              17 files
 
 ========================================================
 WEBSITE STATISTICS
 ========================================================
-Total Pages:         5 HTML pages
+Total Pages:         7 HTML pages
 Total Sections:      25+ content sections
 Total Words:         ~10,000 words
 Load Time:          < 2 seconds
@@ -87,14 +85,22 @@ PAGES OVERVIEW
    • Nedbank case study (Banking)
    • SAEON case study (Research)
    • Karabo E-Learning case study (Education)
+   • Marito Dictionary case study (Language Technology)
+   • iMIHLA case study (Retail & E-commerce)
    • Industries served
 
 5. CONTACT.HTML (Contact Page)
-   • Contact form (8 fields)
+   • Contact form (8 fields + Privacy Policy consent)
    • Service selection
    • Budget/timeline options
    • Contact information
    • FAQ section
+
+6. PRIVACY.HTML (Privacy Policy)
+   • Data collected, third-party services, POPIA rights
+
+7. TERMS.HTML (Terms of Service)
+   • Site use terms, engagement basics, governing law
 
 ========================================================
 FEATURES IMPLEMENTED
@@ -122,11 +128,12 @@ Interactive:
 
 Content:
 ✅ 12+ services listed
-✅ 3 detailed case studies
+✅ 5 detailed case studies
 ✅ 6 industries covered
 ✅ Pricing transparency
 ✅ Company information
 ✅ Contact options
+✅ Privacy Policy & Terms of Service
 
 ========================================================
 BRAND IMPLEMENTATION
