@@ -118,38 +118,17 @@ Choose ONE method:
 
 ## ☑️ Contact Form Setup Checklist
 
-Your contact form needs backend configuration. Choose ONE option:
+The contact form is already wired to [Web3Forms](https://web3forms.com) via a hidden `access_key` input in `contact.html` — no backend setup is needed. It also includes a required Privacy Policy consent checkbox and a honeypot spam field.
 
-### Option 1: Netlify (Recommended)
-- [ ] Sign up at netlify.com
-- [ ] Connect GitHub repository
-- [ ] Deploy site to Netlify
-- [ ] Verify form submissions work
-- [ ] Test receiving form emails
-- [ ] Configure form notifications
-- [ ] Keep form structure as-is (already configured)
+**To point the form at a different Web3Forms account:**
+- [ ] Sign up at web3forms.com and create an access key
+- [ ] Replace the `access_key` value in the hidden input in `contact.html`
 
-### Option 2: Formspree
-- [ ] Sign up at formspree.io
-- [ ] Create new form
-- [ ] Copy form endpoint
-- [ ] Edit contact.html
-- [ ] Replace form action with Formspree URL
-- [ ] Test form submission
-- [ ] Verify email reception
-
-### Option 3: Google Forms
-- [ ] Create Google Form
-- [ ] Embed in contact.html
-- [ ] Style to match website
-- [ ] Test submissions
-
-**After Setup:**
+**After changing the access key:**
 - [ ] Test form submission works
 - [ ] Verify you receive emails
 - [ ] Check spam folder for form emails
-- [ ] Set up email forwarding (if needed)
-- [ ] Configure auto-reply (optional)
+- [ ] Confirm the Privacy Policy consent checkbox blocks submission when unchecked
 
 ---
 

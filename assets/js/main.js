@@ -150,12 +150,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const emailEl   = document.getElementById('email');
             const serviceEl = document.getElementById('service');
             const msgEl     = document.getElementById('message');
+            const consentEl = document.getElementById('consent');
             let valid = true;
 
             if (!nameEl.value.trim())          { showError(nameEl,    'Please enter your name');              valid = false; }
             if (!isValidEmail(emailEl.value))  { showError(emailEl,   'Please enter a valid email address');  valid = false; }
             if (!serviceEl.value)              { showError(serviceEl, 'Please select a service');             valid = false; }
             if (!msgEl.value.trim())           { showError(msgEl,     'Please describe your project');        valid = false; }
+            if (!consentEl.checked)            { showError(consentEl, 'Please agree to the Privacy Policy to continue'); valid = false; }
             if (!valid) return;
 
             // Submit to Web3Forms

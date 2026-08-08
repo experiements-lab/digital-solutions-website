@@ -23,6 +23,8 @@ website/
 ├── services.html           # Detailed services page with pricing
 ├── portfolio.html          # Portfolio with case studies
 ├── contact.html            # Contact page with form
+├── privacy.html            # Privacy Policy
+├── terms.html              # Terms of Service
 ├── assets/
 │   ├── css/
 │   │   └── style.css      # Main stylesheet
@@ -30,11 +32,7 @@ website/
 │   │   └── main.js        # JavaScript functionality
 │   └── images/
 │       ├── Logo.png       # Company logo
-│       ├── background-image.png
-│       ├── craft.gif
-│       ├── growth.gif
-│       ├── germination.gif
-│       └── spark.gif
+│       └── background-image.png
 └── README.md              # This file
 ```
 
@@ -223,17 +221,17 @@ To point the form at a different Web3Forms account:
 ## 🎯 SEO Optimization
 
 Each page includes:
-- Meta descriptions
-- Keywords
-- Open Graph tags (can be added)
+- Meta descriptions and canonical URLs
+- Open Graph and Twitter Card meta tags
 - Semantic HTML structure
 - Alt text for images
+- JSON-LD structured data (`ProfessionalService`, `BreadcrumbList`, and `Review`/`AggregateRating` on the Portfolio page)
+- `sitemap.xml` and `robots.txt` at the site root
 
 To improve SEO further:
-1. Add a `sitemap.xml` file
-2. Add a `robots.txt` file
-3. Submit site to Google Search Console
-4. Add Open Graph and Twitter Card meta tags
+1. Submit the site to Google Search Console
+2. Submit the site to Bing Webmaster Tools
+3. Add Google Analytics (see below)
 
 ## 📱 Browser Compatibility
 
