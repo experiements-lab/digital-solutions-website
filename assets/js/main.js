@@ -389,7 +389,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Support deep-link via URL hash (e.g. services.html#ai-ml)
         // Legacy hashes from the previous service structure map to their new tabs
-        const legacyTabs = { development: 'data-products', automation: 'data-products', design: 'data-products' };
+        const legacyTabs = { development: 'data-products', design: 'data-products' };
         function activateFromHash() {
             const rawHash = window.location.hash.replace('#', '');
             const hash = legacyTabs[rawHash] || rawHash;
