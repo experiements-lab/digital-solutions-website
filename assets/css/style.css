@@ -379,6 +379,14 @@ p {
     transform: none !important;
 }
 
+/* Words split out of .gradient-text are inline-blocks, so each needs its own gradient clip */
+.hero-title .gradient-text .word {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
 .hero-title .word {
     display: inline-block;
     opacity: 0;
