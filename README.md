@@ -1,6 +1,6 @@
 # Digital Solutions Consulting Website
 
-A modern, responsive website for Digital Solutions Consulting - showcasing IT consulting services, case studies, and company information.
+A modern, responsive website for Digital Solutions Consulting - positioning the company as a data company: data engineering, analytics & BI, AI & machine learning, and data products, plus case studies and company information.
 
 **Tagline:** Agile. Simple. Adaptable.
 

@@ -387,9 +387,16 @@ document.addEventListener('DOMContentLoaded', function() {
             btn.addEventListener('click', () => activateTab(btn.dataset.tab));
         });
 
-        // Support deep-link via URL hash (e.g. services.html#automation)
-        const hash = window.location.hash.replace('#', '');
-        if (hash && document.getElementById('tab-' + hash)) activateTab(hash);
+        // Support deep-link via URL hash (e.g. services.html#ai-ml)
+        // Legacy hashes from the previous service structure map to their new tabs
+        const legacyTabs = { development: 'data-products', automation: 'data-products', design: 'data-products' };
+        function activateFromHash() {
+            const rawHash = window.location.hash.replace('#', '');
+            const hash = legacyTabs[rawHash] || rawHash;
+            if (hash && document.getElementById('tab-' + hash)) activateTab(hash);
+        }
+        activateFromHash();
+        window.addEventListener('hashchange', activateFromHash);
     })();
 
     // === FAQ ACCORDION ===
