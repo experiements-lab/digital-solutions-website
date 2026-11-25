@@ -2655,6 +2655,10 @@ body.menu-open {
     flex-shrink: 0;
 }
 
+.founder-card + .founder-card {
+    margin-top: 1.5rem;
+}
+
 .founder-info h3 {
     font-size: 1.75rem;
     font-weight: 700;
